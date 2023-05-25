@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>盒子碰撞检测</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .box-container {
+        position: relative;
+      }
+      .box {
+        position: absolute;
+        width: 200px;
+        height: 100px;
+      }
+      .box-1 {
+        top: 50px;
+        left: 100px;
+        background: orange;
+      }
+      .box-2 {
+        top: 250px;
+        left: 300px;
+        background: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box-container">
+      <div class="box box-1"></div>
+      <div class="box box-2"></div>
+    </div>
+
+    <script>
+      const oBoxContainer = document.querySelector('.box-container')
+      const oAllBoxes = oBoxContainer.querySelectorAll('.box')
+
+      oBoxContainer.addEventListener(
+        'mousedown',
+        (e) => {
+          const { target } = e
+          // const className = target.className.split(' ')
+          const isTargetBox = target.classList.contains('box')
+
+          if (isTargetBox) {
+            target._x = e.clientX - target.offsetLeft
+            target._y = e.clientY - target.offsetTop
+
+            window.addEventListener('mousemove', handleMouseMove, false)
+            oBoxContainer.addEventListener('mouseup', handleMouseUp, false)
+          }
+
+          function handleMouseMove(e) {
+            const x = e.clientX - target._x
+            const y = e.clientY - target._y
+
+            target.style.left = x + 'px'
+            target.style.top = y + 'px'
+
+            // 碰撞检测  collisionCheck
+            const isCollision = collisionCheck(oAllBoxes)
+
+            console.log(isCollision)
+          }
+
+          function handleMouseUp(e) {
+            window.removeEventListener('mousemove', handleMouseMove, false)
+            oBoxContainer.removeEventListener('mouseup', handleMouseUp, false)
+          }
+        },
+        false
+      )
+      function collisionCheck(boxes) {
+        const box1Info = createBoxInfo(boxes[0])
+        const box2Info = createBoxInfo(boxes[1])
+
+        /*
+         *
+         * 第一种 四个边的点坐标比较
+         */
+        // if (
+        //   // 在左侧
+        //   box1Info.x + box1Info.w < box2Info.x ||
+        //   // 在上侧
+        //   box1Info.y + box1Info.h < box2Info.y ||
+        //   // 在右侧
+        //   box1Info.x > box2Info.x + box2Info.w ||
+        //   // 在下侧
+        //   box1Info.y > box2Info.y + box2Info.h
+        // ) {
+        //   return false
+        // }
+
+        // return true
+
+        /**
+         * 第二种 中心点坐标比较
+         *
+         */
+
+        const box1Center = {
+          x: box1Info.x + box1Info.w / 2,
+          y: box1Info.y + box1Info.h / 2,
+        }
+        const box2Center = {
+          x: box2Info.x + box2Info.w / 2,
+          y: box2Info.y + box2Info.h / 2,
+        }
+        const diff = {
+          x: Math.abs(box1Center.x - box2Center.x),
+          y: Math.abs(box1Center.y - box2Center.y),
+        }
+
+        if (
+          diff.x < (box1Info.w + box2Info.w) / 2 &&
+          diff.y < (box1Info.h + box2Info.h) / 2
+        ) {
+          return true
+        }
+
+        return false
+      }
+      function createBoxInfo(box) {
+        return {
+          x: box.offsetLeft,
+          y: box.offsetTop,
+          w: box.offsetWidth,
+          h: box.offsetHeight,
+        }
+      }
+    </script>
+  </body>
+</html>

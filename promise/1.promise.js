@@ -12,6 +12,7 @@
 // 4）每个promise 都有一个 then 方法，可以访问到成功的值和失败的原因
 // 5）可以通过resolve 和 reject 来改变状态，同时调用对应的回调，一个promise实例状态变化后，不能再重新发生变化
 // 6）或者当executor 发生异常的时候，也会触发promise的失败
+// 7) 如果出现异步逻辑我们就采用  发布订阅模式，缓存回调，发布时一次执行
 
 // resolve reject pending(default)
 
