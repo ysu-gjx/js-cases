@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex Layout</title>
+  </head>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1 1 0%;
+      min-height: 0;
+
+      display: flex;
+      gap: 1px;
+    }
+
+    aside {
+      min-width: 220px;
+      max-width: 320px;
+    }
+
+    aside:nth-of-type(1) {
+      order: -1;
+    }
+
+    article {
+      flex: 1 1 0%;
+      min-width: 0;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+  <body>
+    <header>
+      <h1 class="text-red-400">W3cplus</h1>
+      <nav>
+        <ul>
+          <li><a href="">home</a></li>
+          <!-- 其他导航项 -->
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <article>
+        <h2>现代 Web 布局技术</h2>
+        <p>使用 CSS Flexbox 技术构建圣杯布局（Holy Grail Layout）</p>
+      </article>
+      <aside>
+        <h3>左侧列</h3>
+      </aside>
+      <aside>
+        <h3>右侧列</h3>
+      </aside>
+    </main>
+    <footer>
+      <ul>
+        <li><a href="home" class="uppercase">home</a></li>
+        <li><a href="blog">blog</a></li>
+        <li><a href="home">about</a></li>
+        <li><a href="home">contact</a></li>
+        <!-- 其他导航项 -->
+      </ul>
+    </footer>
+
+    <!-- <script src="../../../index.js" type="module"></script> -->
+  </body>
+</html>
